@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>GitHub 仓库文件树展示</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 24px;
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>仓库文件与目录列表</h1>
+  <ul id="fileList"></ul>
+
+  <script>
+    // GitHub API URL，注意分支名称（此处默认 main）
+    const apiUrl = 'https://api.github.com/repos/brainchen2020/brainchen2020.github.io/git/trees/main?recursive=1';
+
+    fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`请求失败，状态码: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.tree && Array.isArray(data.tree)) {
+          const fileListElement = document.getElementById('fileList');
+
+          // 遍历 tree 数组，显示每一项的 path 和类型（blob 为文件，tree 为目录）
+          data.tree.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `${item.path} (${item.type})`;
+            fileListElement.appendChild(li);
+          });
+        } else {
+          console.error('未能获取到 tree 数据', data);
+        }
+      })
+      .catch(error => {
+        console.error('请求出错:', error);
+      });
+  </script>
+</body>
+</html>

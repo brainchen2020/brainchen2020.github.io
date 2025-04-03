@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml"
+  href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22100%22%20height%3D%22100%22%20viewBox%3D%220%200%20100%20100%22%3E%0A%20%20%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2220%22%20fill%3D%22black%22%2F%3E%0A%20%20%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20font-size%3D%2260%22%20font-weight%3D%22bold%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%20font-family%3D%22Arial%2C%20sans-serif%22%20dominant-baseline%3D%22central%22%3EC.%3C%2Ftext%3E%0A%3C%2Fsvg%3E">
+  <title>C.博客</title>
+  <style>
+    :root {
+      --primary-color: #000;
+      --secondary-color: #555;
+      --background-color: #fff;
+      --border-color: #e1e1e1;
+      --hover-color: #f5f5f5;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--primary-color);
+      background-color: var(--background-color);
+      line-height: 1.6;
+    }
+    
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+    
+    .sidebar {
+      width: 25%;
+      padding: 2rem;
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .main-content {
+      width: 50%;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+    
+    .empty-space {
+      width: 25%;
+      background-color: var(--background-color);
+    }
+    
+    .profile {
+      margin-bottom: 2rem;
+      flex-grow: 1;
+    }
+    
+    .profile h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 0.5rem;
+    }
+    
+    .profile p {
+      margin-bottom: 1rem;
+      color: var(--secondary-color);
+    }
+    
+    .contact {
+      margin-top: auto;
+    }
+    
+    .contact h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 0.5rem;
+    }
+    
+    .contact-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    
+    .contact-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 0.5rem;
+      fill: var(--primary-color);
+    }
+    
+    .contact-link {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+    
+    .contact-link:hover {
+      text-decoration: underline;
+    }
+    
+    .main-content h1 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 0.5rem;
+    }
+    
+    .file-tree {
+      list-style-type: none;
+    }
+    
+    .directory {
+      margin-bottom: 0.5rem;
+    }
+    
+    .directory-name {
+      font-weight: bold;
+      cursor: pointer;
+      padding: 0.25rem 0;
+      display: inline-block;
+    }
+    
+    .directory-name::before {
+      content: "▶";
+      display: inline-block;
+      margin-right: 0.5rem;
+      transition: transform 0.2s;
+    }
+    
+    .directory.open > .directory-name::before {
+      transform: rotate(90deg);
+    }
+    
+    .directory-contents {
+      display: none;
+      padding-left: 1.5rem;
+    }
+    
+    .directory.open > .directory-contents {
+      display: block;
+    }
+    
+    .file {
+      padding: 0.25rem 0;
+    }
+    
+    .file-link {
+      color: var(--primary-color);
+      text-decoration: none;
+      display: inline-block;
+      padding: 0.25rem 0;
+      transition: background-color 0.2s;
+    }
+    
+    .file-link:hover {
+      background-color: var(--hover-color);
+    }
+    
+    .file-date {
+      font-size: 0.8rem;
+      color: var(--secondary-color);
+      margin-left: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 左侧栏：个人简介和联系方式 -->
+    <aside class="sidebar">
+      <div class="profile">
+        <h2>关于我</h2>
+        <p>你好，我是Brain Chen。这是我的个人博客，用于分享我的学习笔记、编程心得和个人项目。</p>
+        <p>19年软件工程专业毕业。之前从事Web开发，业余时间对底层技术好奇，目前兴趣Micro Model【微小模型】，做笔记记录成长也顺便分享。</p>
+        <p>为什么做个人博客？因为不想让其他平台冗余的功能影响，简洁点好。</p>
+      </div>
+      
+      <div class="contact">
+        <h2>联系方式</h2>
+        <div class="contact-item">
+          <svg class="contact-icon" viewBox="0 0 24 24">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          <a href="mailto:18320166299@163.com" class="contact-link">18320166299@163.com</a>
+        </div>
+        <div class="contact-item">
+          <svg class="contact-icon" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+          </svg>
+          <span class="contact-link">WeChat: 18320166299</span>
+        </div>
+        <div class="contact-item">
+          <svg class="contact-icon" viewBox="0 0 24 24">
+            <path d="M12 0a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.4 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.1-.4-.6-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.6.2 2.9.1 3.2.8.8 1.3 1.9 1.3 3.2 0 4.6-2.9 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 0z"/>
+          </svg>
+          <a href="https://github.com/brainchen2020" target="_blank" rel="noopener noreferrer" class="contact-link">github.com/brainchen2020</a>
+        </div>
+      </div>
+    </aside>
+    
+    <!-- 中间内容：仓库文件树 -->
+    <main class="main-content">
+      <h1>目录列表</h1>
+      <div id="fileTree" class="file-tree"></div>
+    </main>
+    
+    <!-- 右侧留白 -->
+    <div class="empty-space"></div>
+  </div>
+
+  <script>
+    // GitHub API URL，获取仓库文件结构
+    const apiUrl = 'https://api.github.com/repos/brainchen2020/brainchen2020.github.io/git/trees/main?recursive=1';
+    
+ 
+    // 获取目录树
+    async function getRepositoryTree() {
+      try {
+        const headers = {
+          'Accept': 'application/vnd.github.v3+json'
+        };
+
+        const response = await fetch(apiUrl, { headers });
+        if (!response.ok) {
+          throw new Error(`请求失败，状态码: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        return data.tree || [];
+      } catch (error) {
+        console.error('获取仓库结构失败:', error);
+        return [];
+      }
+    }
+    
+    // 构建目录树结构
+    function buildDirectoryTree(items) {
+      const root = {};
+      
+      items.forEach(item => {
+        const parts = item.path.split('/');
+        let current = root;
+        
+        // 跳过 nash 和 test 文件夹及其内容
+        if (parts[0] === 'nash' || parts[0] === 'test') {
+          return;
+        }
+        
+        // 为每个路径部分创建嵌套对象
+        for (let i = 0; i < parts.length - 1; i++) {
+          const part = parts[i];
+          if (!current[part]) {
+            current[part] = {};
+          }
+          current = current[part];
+        }
+        
+        // 添加最后的文件或目录
+        const lastPart = parts[parts.length - 1];
+        if (item.type === 'blob') {
+          // 只添加 HTML 文件
+          if (lastPart.endsWith('.html')) {
+            if (!current[lastPart]) {
+              current[lastPart] = { type: 'file', path: item.path };
+            }
+          }
+        } else if (item.type === 'tree') {
+          if (!current[lastPart]) {
+            current[lastPart] = {};
+          }
+        }
+      });
+      
+      return root;
+    }
+    
+    // 渲染目录树
+    function renderDirectoryTree(tree, parentElement, basePath = '') {
+      // 获取目录中的项目
+      const items = [];
+      for (const name in tree) {
+        if (Object.prototype.hasOwnProperty.call(tree, name)) {
+          const item = tree[name];
+          const itemPath = basePath ? `${basePath}/${name}` : name;
+          
+          if (item.type === 'file') {
+            items.push({
+              name,
+              path: item.path,
+              type: 'file'
+            });
+          } else {
+            items.push({
+              name,
+              type: 'directory',
+              children: item,
+              path: itemPath
+            });
+          }
+        }
+      }
+      
+      // 按名称排序（目录保持在前）
+      items.sort((a, b) => {
+        if (a.type !== b.type) {
+          return a.type === 'directory' ? -1 : 1;
+        }
+        return a.name.localeCompare(b.name);
+      });
+      
+      // 渲染项目
+      for (const item of items) {
+        if (item.type === 'directory') {
+          const dirElement = document.createElement('div');
+          dirElement.className = 'directory open'; // 目录默认打开
+          
+          const dirNameElement = document.createElement('div');
+          dirNameElement.className = 'directory-name';
+          dirNameElement.textContent = item.name;
+          dirNameElement.addEventListener('click', function() {
+            dirElement.classList.toggle('open');
+          });
+          
+          const dirContentsElement = document.createElement('div');
+          dirContentsElement.className = 'directory-contents';
+          
+          dirElement.appendChild(dirNameElement);
+          dirElement.appendChild(dirContentsElement);
+          parentElement.appendChild(dirElement);
+          
+          // 递归渲染子目录
+          renderDirectoryTree(item.children, dirContentsElement, item.path);
+        } else {
+          const fileElement = document.createElement('div');
+          fileElement.className = 'file';
+          
+          // HTML文件可点击，且显示时去掉.html后缀
+          const linkElement = document.createElement('a');
+          linkElement.href = item.path;
+          linkElement.className = 'file-link';
+          // 移除.html后缀显示
+          linkElement.textContent = item.name.replace('.html', '');
+          
+          fileElement.appendChild(linkElement);
+          parentElement.appendChild(fileElement);
+        }
+      }
+    }
+    
+    // 初始化
+    async function init() {
+      const fileTreeElement = document.getElementById('fileTree');
+      
+      // 显示加载中
+      fileTreeElement.textContent = '加载中...';
+      
+      // 获取仓库树结构
+      const items = await getRepositoryTree();
+      
+      if (items.length === 0) {
+        fileTreeElement.textContent = '无法加载仓库内容';
+        return;
+      }
+      
+      // 构建目录树
+      const tree = buildDirectoryTree(items);
+      
+      // 清空加载消息
+      fileTreeElement.textContent = '';
+      
+      // 渲染目录树
+      renderDirectoryTree(tree, fileTreeElement);
+    }
+    
+    // 页面加载完成后初始化
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
