@@ -139,10 +139,12 @@
       max-width: 800px;
       background: var(--note-bg-color);
       padding: 30px;
+      padding-top: 20px;
       border-radius: 12px;
       box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
       box-sizing: border-box;
       overflow-wrap: break-word;
+      position: relative;
     }
 
     .file-title {
@@ -476,10 +478,11 @@
 
       .file-title {
         font-size: 20px;
-        white-space: normal;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        word-break: break-word;
+        padding-left: 40px;
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
       }
 
       /* Force text wrapping on mobile */
@@ -516,6 +519,16 @@
         width: 100% !important;
         max-width: 100% !important;
         overflow-x: hidden !important;
+      }
+
+      .home-button {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        z-index: 100;
       }
     }
 
@@ -564,12 +577,37 @@
       overflow-wrap: break-word;
       max-width: 100%;
     }
+
+    /* Home button styles */
+    .home-button {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background-color: var(--control-bg-color);
+      color: var(--control-text-color);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+      font-size: 20px;
+      z-index: 10000;
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .home-button:hover {
+      transform: scale(1.1);
+      background-color: var(--control-hover-bg-color);
+    }
   </style>
 </head>
 
 <body>
-
   <div class="editor-container">
+    <a href="https://brainchen2020.github.io/" class="home-button" title="Home">🏠</a>
     <div id="filename" contenteditable="false" class="file-title"></div>
 
     <div id="toolbar" class="no-print" style="display: none;">
