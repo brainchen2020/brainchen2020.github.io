@@ -13,6 +13,7 @@
       --page-text-color: #333;
 
       --control-bg-color: #f8f9fa;
+      --control-bg-color-rgb: 248, 249, 250;
       --control-text-color: buttontext;
       --control-hover-bg-color: #f0f0f0;
       --control-hover-text-color: #bbb;
@@ -67,6 +68,7 @@
         --page-text-color: #ddd;
 
         --control-bg-color: #444;
+        --control-bg-color-rgb: 68, 68, 68;
         --control-text-color: #aaa;
         --control-hover-bg-color: #666;
         --control-hover-text-color: #eee;
@@ -135,16 +137,17 @@
     }
 
     .editor-container {
-      width: 100%;
+      width: 60%;
       max-width: 800px;
       background: var(--note-bg-color);
       padding: 30px;
-      padding-top: 20px;
+      /* padding-top: 70px; */
       border-radius: 12px;
       box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
       box-sizing: border-box;
       overflow-wrap: break-word;
       position: relative;
+      /* margin-top: 50px; */
     }
 
     .file-title {
@@ -168,22 +171,24 @@
     }
 
     #toolbar {
-      position: sticky;
-      position: -webkit-sticky;
+      display: flex;
+      position: fixed;
       gap: 8px;
       top: 5px;
       padding: 0 10px;
-      z-index: 9999;
-      background-color: var(--control-bg-color);
+      z-index: 10001;
+      background-color: rgba(var(--control-bg-color-rgb, 248, 249, 250), 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       border-radius: 12px;
-      display: flex;
       flex-wrap: wrap;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: center;
-      max-width: 100%;
-      overflow-x: auto;
+      max-width: calc(100% - 100px);
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none; /* Firefox */
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      transition: opacity 0.3s ease, transform 0.3s ease;
     }
 
     #toolbar::-webkit-scrollbar {
@@ -203,12 +208,14 @@
     #toolbar label,
     #toolbar select {
       padding: 8px;
+      margin: 0 2px;
       border: none;
       background: none;
       color: var(--control-text-color);
       font-size: 16px;
       cursor: pointer;
-      transition: opacity 0.2s
+      transition: opacity 0.2s;
+      border-radius: 4px;
     }
 
     #toolbar button:hover,
@@ -223,26 +230,32 @@
     .dropdown {
       position: relative;
       display: inline-block;
+      margin: 0 5px;
     }
 
     /* Dropdown button style */
     .dropdown>button {
       padding: 6px 10px;
+      position: relative;
+      z-index: 1000;
     }
 
     /* Dropdown content (hidden by default) */
     .dropdown-content {
       display: none;
       position: absolute;
-      top: 110%;
-      right: 0;
+      top: 100%;
+      left: 0;
       background: var(--control-bg-color);
       border: 1px solid var(--control-bg-color);
       color: var(--control-text-color);
       padding: 8px;
-      border-radius: 4px;
+      border-radius: 8px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-      z-index: 10;
+      z-index: 10003; /* Higher than toolbar */
+      width: auto;
+      min-width: 120px;
+      transform: none;
     }
 
     /* Show dropdown when .show is added */
@@ -251,24 +264,26 @@
     }
 
     /* Grid of swatches */
-    .swatch-grid {
+    /* .swatch-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, 24px);
       gap: 6px;
-    }
+    } */
 
     .color-swatch {
-      width: 24px;
-      height: 24px;
-      border: none;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(0,0,0,0.1);
       border-radius: 50%;
       cursor: pointer;
       transition: transform 0.2s, box-shadow 0.2s;
+      font-size: 0;
+      color: transparent;
     }
 
     .color-swatch:hover {
       transform: scale(1.1);
-      box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
     }
 
     #saveDropdown {
@@ -382,10 +397,7 @@
         font-size: 24px;
       }
 
-      #toolbar {
-        padding: 5px;
-        gap: 4px;
-      }
+ 
 
       #toolbar button,
       #toolbar label,
@@ -398,11 +410,7 @@
         width: 20px;
         height: 20px;
       }
-
-      .swatch-grid {
-        grid-template-columns: repeat(auto-fill, 20px);
-        gap: 4px;
-      }
+ 
     }
 
     @media (max-width: 480px) {
@@ -412,8 +420,10 @@
 
       .editor-container {
         padding: 10px;
+        padding-top: 60px;
         width: 100%;
         margin: 0 auto;
+        margin-top: 50px;
       }
       
       #editorContainer {
@@ -424,44 +434,53 @@
       #toolbar {
         flex-wrap: wrap;
         justify-content: center;
+        position: fixed;
+        top: 15px;
+        left: 60px; /* Leave space for smaller home button on mobile */
+        right: 10px;
+        margin: 0;
+        max-width: calc(100% - 80px);
+        padding: 5px 8px;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
       }
 
       #toolbar button,
       #toolbar label,
       #toolbar select {
-        padding: 5px;
+        padding: 4px;
         font-size: 12px;
+        margin: 2px 1px;
       }
 
       #splitbar {
-        width: 100%;
-        margin: 5px 0;
-        text-align: center;
+        display: none;
       }
 
+      .dropdown {
+        position: static;
+        margin: 0 2px;
+      }
+      
       .dropdown-content {
-        position: fixed;
+        position: absolute;
         top: auto;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        max-height: 40vh;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: 5px;
+        width: 160px;
+        max-height: 300px;
         overflow-y: auto;
-        border-radius: 12px 12px 0 0;
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        z-index: 10003;
       }
-
-      .swatch-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
-        padding: 15px;
-      }
-
+      
+ 
+      
       .color-swatch {
-        width: 30px;
-        height: 30px;
+        width: 50px;
+        height: 50px;
         margin: 0 auto;
       }
 
@@ -525,10 +544,10 @@
         width: 30px;
         height: 30px;
         font-size: 16px;
-        position: absolute;
-        top: 8px;
-        left: 8px;
-        z-index: 100;
+        position: fixed;
+        top: 15px;
+        left: 10px;
+        z-index: 10002;
       }
     }
 
@@ -581,8 +600,8 @@
     /* Home button styles */
     .home-button {
       position: fixed;
-      top: 10px;
-      left: 10px;
+      top: 15px;
+      left: 15px;
       background-color: var(--control-bg-color);
       color: var(--control-text-color);
       width: 40px;
@@ -594,7 +613,7 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
       text-decoration: none;
       font-size: 20px;
-      z-index: 10000;
+      z-index: 10002;
       transition: transform 0.2s, background-color 0.2s;
     }
 
@@ -602,98 +621,116 @@
       transform: scale(1.1);
       background-color: var(--control-hover-bg-color);
     }
+
+    /* Add styling for active toolbar buttons */
+    #toolbar button.active,
+    #toolbar label.active {
+      background-color: var(--control-hover-bg-color);
+      color: var(--control-text-color);
+      font-weight: bold;
+    }
+
+    /* Improved toolbar animations and transitions */
+    #toolbar:hover {
+      opacity: 1;
+    }
+
+    /* Slightly transparent toolbar when not in focus */
+    #toolbar:not(:hover) {
+      opacity: 0.9;
+    }
   </style>
 </head>
 
 <body>
-  <div class="editor-container">
-    <a href="https://brainchen2020.github.io/" class="home-button" title="Home">🏠</a>
-    <div id="filename" contenteditable="false" class="file-title"></div>
+  <div id="toolbar" class="no-print" style="display: none;">
+    <button onclick="changeBlock('h1')">XL</button>
+    <button onclick="changeBlock('h2')">L</button>
+    <button onclick="changeBlock('p')">M</button>
+    <button onclick="changeBlock('small')">S</button>
 
-    <div id="toolbar" class="no-print" style="display: none;">
-      <button onclick="changeBlock('h1')">XL</button>
-      <button onclick="changeBlock('h2')">L</button>
-      <button onclick="changeBlock('p')">M</button>
-      <button onclick="changeBlock('small')">S</button>
+    <button onclick="applyFormat('strong')"><b>B</b></button>
+    <button onclick="applyFormat('em')"><i>I</i></button>
+    <button onclick="applyFormat('u')"><u>U</u></button>
+    <button onclick="applyURL()">🔗</button>
 
-      <button onclick="applyFormat('strong')"><b>B</b></button>
-      <button onclick="applyFormat('em')"><i>I</i></button>
-      <button onclick="applyFormat('u')"><u>U</u></button>
-      <button onclick="applyURL()">🔗</button>
+    <label for="imageUpload">📷</label>
+    <input type="file" id="imageUpload" accept="image/*" onchange="insertImage(event)">
 
-      <label for="imageUpload">📷</label>
-      <input type="file" id="imageUpload" accept="image/*" onchange="insertImage(event)">
-
-      <div class="dropdown">
-        <button onclick="toggleDropdown('textColorDropdown')">Color</button>
-        <div id="textColorDropdown" class="dropdown-content">
-          <div class="swatch-grid">
-            <button class="color-swatch" style="background: var(--note-text-color-1);"
-              onmousedown="event.preventDefault();"
-              onclick="applyTextColor('1'); toggleDropdown('textColorDropdown')"></button>
-            <button class="color-swatch" style="background: var(--note-text-color-2);"
-              onmousedown="event.preventDefault();"
-              onclick="applyTextColor('2'); toggleDropdown('textColorDropdown')"></button>
-            <button class="color-swatch" style="background: var(--note-text-color-3);"
-              onmousedown="event.preventDefault();"
-              onclick="applyTextColor('3'); toggleDropdown('textColorDropdown')"></button>
-            <button class="color-swatch" style="background: var(--note-text-color-4);"
-              onmousedown="event.preventDefault();"
-              onclick="applyTextColor('4'); toggleDropdown('textColorDropdown')"></button>
-            <button class="color-swatch" style="background: var(--note-text-color-5);"
-              onmousedown="event.preventDefault();"
-              onclick="applyTextColor('5'); toggleDropdown('textColorDropdown')"></button>
-            <button class="color-swatch" style="background: var(--note-text-color-6);"
-              onmousedown="event.preventDefault();"
-              onclick="applyTextColor('6'); toggleDropdown('textColorDropdown')"></button>
-            <button class="color-swatch" style="background: var(--note-text-color-7);"
-              onmousedown="event.preventDefault();"
-              onclick="applyTextColor('7'); toggleDropdown('textColorDropdown')"></button>
-            <button class="color-swatch" style="background: var(--note-text-color-8);"
-              onmousedown="event.preventDefault();"
-              onclick="applyTextColor('8'); toggleDropdown('textColorDropdown')"></button>
-          </div>
+    <div class="dropdown">
+      <button onclick="toggleDropdown('textColorDropdown', event)">Color</button>
+       <div id="textColorDropdown" class="dropdown-content">
+        <div class="swatch-grid">
+          <button class="color-swatch" style="background: var(--note-text-color-1);"
+            onmousedown="event.preventDefault();"
+            onclick="applyTextColor('1'); toggleDropdown('textColorDropdown')"></button>
+          <button class="color-swatch" style="background: var(--note-text-color-2);"
+            onmousedown="event.preventDefault();"
+            onclick="applyTextColor('2'); toggleDropdown('textColorDropdown')"></button>
+          <button class="color-swatch" style="background: var(--note-text-color-3);"
+            onmousedown="event.preventDefault();"
+            onclick="applyTextColor('3'); toggleDropdown('textColorDropdown')"></button>
+          <button class="color-swatch" style="background: var(--note-text-color-4);"
+            onmousedown="event.preventDefault();"
+            onclick="applyTextColor('4'); toggleDropdown('textColorDropdown')"></button>
+          <button class="color-swatch" style="background: var(--note-text-color-5);"
+            onmousedown="event.preventDefault();"
+            onclick="applyTextColor('5'); toggleDropdown('textColorDropdown')"></button>
+          <button class="color-swatch" style="background: var(--note-text-color-6);"
+            onmousedown="event.preventDefault();"
+            onclick="applyTextColor('6'); toggleDropdown('textColorDropdown')"></button>
+          <button class="color-swatch" style="background: var(--note-text-color-7);"
+            onmousedown="event.preventDefault();"
+            onclick="applyTextColor('7'); toggleDropdown('textColorDropdown')"></button>
+          <button class="color-swatch" style="background: var(--note-text-color-8);"
+            onmousedown="event.preventDefault();"
+            onclick="applyTextColor('8'); toggleDropdown('textColorDropdown')"></button>
         </div>
       </div>
-
-      <!-- Highlight Color Dropdown -->
-      <div class="dropdown">
-        <button onclick="toggleDropdown('highlightDropdown')">Highlight</button>
-        <div id="highlightDropdown" class="dropdown-content">
-          <div class="swatch-grid">
-            <button class="color-swatch" style="background: var(--note-highlight-color-1);"
-              onmousedown="event.preventDefault();"
-              onclick="applyHighlightColor('1'); toggleDropdown('highlightDropdown')"></button>
-            <button class="color-swatch" style="background: var(--note-highlight-color-2);"
-              onmousedown="event.preventDefault();"
-              onclick="applyHighlightColor('2'); toggleDropdown('highlightDropdown')"></button>
-            <button class="color-swatch" style="background: var(--note-highlight-color-3);"
-              onmousedown="event.preventDefault();"
-              onclick="applyHighlightColor('3'); toggleDropdown('highlightDropdown')"></button>
-            <button class="color-swatch" style="background: var(--note-highlight-color-4);"
-              onmousedown="event.preventDefault();"
-              onclick="applyHighlightColor('4'); toggleDropdown('highlightDropdown')"></button>
-            <button class="color-swatch" style="background: var(--note-highlight-color-5);"
-              onmousedown="event.preventDefault();"
-              onclick="applyHighlightColor('5'); toggleDropdown('highlightDropdown')"></button>
-            <button class="color-swatch" style="background: var(--note-highlight-color-6);"
-              onmousedown="event.preventDefault();"
-              onclick="applyHighlightColor('6'); toggleDropdown('highlightDropdown')"></button>
-            <button class="color-swatch" style="background: var(--note-highlight-color-7);"
-              onmousedown="event.preventDefault();"
-              onclick="applyHighlightColor('7'); toggleDropdown('highlightDropdown')"></button>
-            <button class="color-swatch" style="background: var(--note-highlight-color-8);"
-              onmousedown="event.preventDefault();"
-              onclick="applyHighlightColor('8'); toggleDropdown('highlightDropdown')"></button>
-          </div>
-        </div>
-      </div>
-
-      <div id="splitbar">|</div>
-      <!-- Block conversion -->
-      <button onclick="exportToFile()">💾</button>
-
     </div>
+
+    <!-- Highlight Color Dropdown -->
+    <div class="dropdown">
+      <button onclick="toggleDropdown('highlightDropdown', event)">Highlight</button>
+      <div id="highlightDropdown" class="dropdown-content">
+        <div class="swatch-grid">
+          <button class="color-swatch" style="background: var(--note-highlight-color-1);"
+            onmousedown="event.preventDefault();"
+            onclick="applyHighlightColor('1'); toggleDropdown('highlightDropdown', event); return false;"></button>
+          <button class="color-swatch" style="background: var(--note-highlight-color-2);"
+            onmousedown="event.preventDefault();"
+            onclick="applyHighlightColor('2'); toggleDropdown('highlightDropdown', event); return false;"></button>
+          <button class="color-swatch" style="background: var(--note-highlight-color-3);"
+            onmousedown="event.preventDefault();"
+            onclick="applyHighlightColor('3'); toggleDropdown('highlightDropdown', event); return false;"></button>
+          <button class="color-swatch" style="background: var(--note-highlight-color-4);"
+            onmousedown="event.preventDefault();"
+            onclick="applyHighlightColor('4'); toggleDropdown('highlightDropdown', event); return false;"></button>
+          <button class="color-swatch" style="background: var(--note-highlight-color-5);"
+            onmousedown="event.preventDefault();"
+            onclick="applyHighlightColor('5'); toggleDropdown('highlightDropdown', event); return false;"></button>
+          <button class="color-swatch" style="background: var(--note-highlight-color-6);"
+            onmousedown="event.preventDefault();"
+            onclick="applyHighlightColor('6'); toggleDropdown('highlightDropdown', event); return false;"></button>
+          <button class="color-swatch" style="background: var(--note-highlight-color-7);"
+            onmousedown="event.preventDefault();"
+            onclick="applyHighlightColor('7'); toggleDropdown('highlightDropdown', event); return false;"></button>
+          <button class="color-swatch" style="background: var(--note-highlight-color-8);"
+            onmousedown="event.preventDefault();"
+            onclick="applyHighlightColor('8'); toggleDropdown('highlightDropdown', event); return false;"></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="splitbar">|</div>
+    <!-- Block conversion -->
+    <button onclick="exportToFile()">💾</button>
+  </div>
+
+  <a href="https://brainchen2020.github.io/" class="home-button" title="Home">🏠</a>
+  
+  <div class="editor-container">
+    <div id="filename" contenteditable="false" class="file-title"></div>
 
     <div id="editorContainer" class="thin-line">
       <div id="editor" contenteditable="false">
@@ -809,7 +846,7 @@
       }
     }
 
-    // Toggle dropdown visibility
+   // Toggle dropdown visibility
     function toggleDropdown(id) {
       const dropdown = document.getElementById(id);
       if (dropdown.classList.contains('show')) {
@@ -942,13 +979,31 @@
     // Called when a text color swatch is clicked.
     function applyTextColor(color) {
       if (!color) return;
-      applyStyle("color: var(--note-text-color-" + color + ");");
+      
+      const selection = window.getSelection();
+      if (!selection.rangeCount || selection.isCollapsed) return;
+      
+      const range = selection.getRangeAt(0);
+      const editor = document.getElementById('editor');
+      if (!editor.contains(range.commonAncestorContainer)) return;
+      
+      wrapRangeText(range, 'span', "color: var(--note-text-color-" + color + ");");
+      selection.removeAllRanges();
     }
 
     // Called when a highlight (background color) swatch is clicked.
     function applyHighlightColor(color) {
       if (!color) return;
-      applyStyle("background-color: var(--note-highlight-color-" + color + ");");
+      
+      const selection = window.getSelection();
+      if (!selection.rangeCount || selection.isCollapsed) return;
+      
+      const range = selection.getRangeAt(0);
+      const editor = document.getElementById('editor');
+      if (!editor.contains(range.commonAncestorContainer)) return;
+      
+      wrapRangeText(range, 'span', "background-color: var(--note-highlight-color-" + color + ");");
+      selection.removeAllRanges();
     }
 
     // Convert the current block (direct child of #editor) to the chosen tag.
@@ -1132,8 +1187,8 @@
       document.querySelectorAll('.dropdown > button').forEach(btn => {
         btn.addEventListener('touchend', function(e) {
           e.preventDefault();
-          const id = this.getAttribute('onclick').match(/toggleDropdown\('(.+?)'\)/)[1];
-          toggleDropdown(id);
+          const id = this.getAttribute('onclick').match(/toggleDropdown\('(.+?)'(?:, event)?\)/)[1];
+          toggleDropdown(id, e);
         });
       });
 
