@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0066)file:///D:/Git%20Repository/brainchen2020.github.io/nash/nash.html -->
 <html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -641,49 +640,49 @@
 </head>
 
 <body>
-  <div id="toolbar" class="no-print" style="display: flex;">
-    <button onclick="changeBlock(&#39;h1&#39;)">XL</button>
-    <button onclick="changeBlock(&#39;h2&#39;)">L</button>
-    <button onclick="changeBlock(&#39;p&#39;)">M</button>
-    <button onclick="changeBlock(&#39;small&#39;)">S</button>
+  <div id="toolbar" class="no-print" style="display: none;">
+    <button onclick="changeBlock('h1')">XL</button>
+    <button onclick="changeBlock('h2')">L</button>
+    <button onclick="changeBlock('p')">M</button>
+    <button onclick="changeBlock('small')">S</button>
 
-    <button onclick="applyFormat(&#39;strong&#39;)"><b>B</b></button>
-    <button onclick="applyFormat(&#39;em&#39;)"><i>I</i></button>
-    <button onclick="applyFormat(&#39;u&#39;)"><u>U</u></button>
+    <button onclick="applyFormat('strong')"><b>B</b></button>
+    <button onclick="applyFormat('em')"><i>I</i></button>
+    <button onclick="applyFormat('u')"><u>U</u></button>
     <button onclick="applyURL()">🔗</button>
 
     <label for="imageUpload">📷</label>
     <input type="file" id="imageUpload" accept="image/*" onchange="insertImage(event)">
 
     <div class="dropdown">
-      <button onclick="toggleDropdown(&#39;textColorDropdown&#39;, event)">Color</button>
+      <button onclick="toggleDropdown('textColorDropdown', event)">Color</button>
        <div id="textColorDropdown" class="dropdown-content">
         <div class="swatch-grid">
-          <button class="color-swatch" style="background: var(--note-text-color-1);" onmousedown="event.preventDefault();" onclick="applyTextColor(&#39;1&#39;); toggleDropdown(&#39;textColorDropdown&#39;)"></button>
-          <button class="color-swatch" style="background: var(--note-text-color-2);" onmousedown="event.preventDefault();" onclick="applyTextColor(&#39;2&#39;); toggleDropdown(&#39;textColorDropdown&#39;)"></button>
-          <button class="color-swatch" style="background: var(--note-text-color-3);" onmousedown="event.preventDefault();" onclick="applyTextColor(&#39;3&#39;); toggleDropdown(&#39;textColorDropdown&#39;)"></button>
-          <button class="color-swatch" style="background: var(--note-text-color-4);" onmousedown="event.preventDefault();" onclick="applyTextColor(&#39;4&#39;); toggleDropdown(&#39;textColorDropdown&#39;)"></button>
-          <button class="color-swatch" style="background: var(--note-text-color-5);" onmousedown="event.preventDefault();" onclick="applyTextColor(&#39;5&#39;); toggleDropdown(&#39;textColorDropdown&#39;)"></button>
-          <button class="color-swatch" style="background: var(--note-text-color-6);" onmousedown="event.preventDefault();" onclick="applyTextColor(&#39;6&#39;); toggleDropdown(&#39;textColorDropdown&#39;)"></button>
-          <button class="color-swatch" style="background: var(--note-text-color-7);" onmousedown="event.preventDefault();" onclick="applyTextColor(&#39;7&#39;); toggleDropdown(&#39;textColorDropdown&#39;)"></button>
-          <button class="color-swatch" style="background: var(--note-text-color-8);" onmousedown="event.preventDefault();" onclick="applyTextColor(&#39;8&#39;); toggleDropdown(&#39;textColorDropdown&#39;)"></button>
+          <button class="color-swatch" style="background: var(--note-text-color-1);" onmousedown="event.preventDefault();" onclick="applyTextColor('1'); toggleDropdown('textColorDropdown')"></button>
+          <button class="color-swatch" style="background: var(--note-text-color-2);" onmousedown="event.preventDefault();" onclick="applyTextColor('2'); toggleDropdown('textColorDropdown')"></button>
+          <button class="color-swatch" style="background: var(--note-text-color-3);" onmousedown="event.preventDefault();" onclick="applyTextColor('3'); toggleDropdown('textColorDropdown')"></button>
+          <button class="color-swatch" style="background: var(--note-text-color-4);" onmousedown="event.preventDefault();" onclick="applyTextColor('4'); toggleDropdown('textColorDropdown')"></button>
+          <button class="color-swatch" style="background: var(--note-text-color-5);" onmousedown="event.preventDefault();" onclick="applyTextColor('5'); toggleDropdown('textColorDropdown')"></button>
+          <button class="color-swatch" style="background: var(--note-text-color-6);" onmousedown="event.preventDefault();" onclick="applyTextColor('6'); toggleDropdown('textColorDropdown')"></button>
+          <button class="color-swatch" style="background: var(--note-text-color-7);" onmousedown="event.preventDefault();" onclick="applyTextColor('7'); toggleDropdown('textColorDropdown')"></button>
+          <button class="color-swatch" style="background: var(--note-text-color-8);" onmousedown="event.preventDefault();" onclick="applyTextColor('8'); toggleDropdown('textColorDropdown')"></button>
         </div>
       </div>
     </div>
 
     <!-- Highlight Color Dropdown -->
     <div class="dropdown">
-      <button onclick="toggleDropdown(&#39;highlightDropdown&#39;, event)">Highlight</button>
+      <button onclick="toggleDropdown('highlightDropdown', event)">Highlight</button>
       <div id="highlightDropdown" class="dropdown-content">
         <div class="swatch-grid">
-          <button class="color-swatch" style="background: var(--note-highlight-color-1);" onmousedown="event.preventDefault();" onclick="applyHighlightColor(&#39;1&#39;); toggleDropdown(&#39;highlightDropdown&#39;, event); return false;"></button>
-          <button class="color-swatch" style="background: var(--note-highlight-color-2);" onmousedown="event.preventDefault();" onclick="applyHighlightColor(&#39;2&#39;); toggleDropdown(&#39;highlightDropdown&#39;, event); return false;"></button>
-          <button class="color-swatch" style="background: var(--note-highlight-color-3);" onmousedown="event.preventDefault();" onclick="applyHighlightColor(&#39;3&#39;); toggleDropdown(&#39;highlightDropdown&#39;, event); return false;"></button>
-          <button class="color-swatch" style="background: var(--note-highlight-color-4);" onmousedown="event.preventDefault();" onclick="applyHighlightColor(&#39;4&#39;); toggleDropdown(&#39;highlightDropdown&#39;, event); return false;"></button>
-          <button class="color-swatch" style="background: var(--note-highlight-color-5);" onmousedown="event.preventDefault();" onclick="applyHighlightColor(&#39;5&#39;); toggleDropdown(&#39;highlightDropdown&#39;, event); return false;"></button>
-          <button class="color-swatch" style="background: var(--note-highlight-color-6);" onmousedown="event.preventDefault();" onclick="applyHighlightColor(&#39;6&#39;); toggleDropdown(&#39;highlightDropdown&#39;, event); return false;"></button>
-          <button class="color-swatch" style="background: var(--note-highlight-color-7);" onmousedown="event.preventDefault();" onclick="applyHighlightColor(&#39;7&#39;); toggleDropdown(&#39;highlightDropdown&#39;, event); return false;"></button>
-          <button class="color-swatch" style="background: var(--note-highlight-color-8);" onmousedown="event.preventDefault();" onclick="applyHighlightColor(&#39;8&#39;); toggleDropdown(&#39;highlightDropdown&#39;, event); return false;"></button>
+          <button class="color-swatch" style="background: var(--note-highlight-color-1);" onmousedown="event.preventDefault();" onclick="applyHighlightColor('1'); toggleDropdown('highlightDropdown', event); return false;"></button>
+          <button class="color-swatch" style="background: var(--note-highlight-color-2);" onmousedown="event.preventDefault();" onclick="applyHighlightColor('2'); toggleDropdown('highlightDropdown', event); return false;"></button>
+          <button class="color-swatch" style="background: var(--note-highlight-color-3);" onmousedown="event.preventDefault();" onclick="applyHighlightColor('3'); toggleDropdown('highlightDropdown', event); return false;"></button>
+          <button class="color-swatch" style="background: var(--note-highlight-color-4);" onmousedown="event.preventDefault();" onclick="applyHighlightColor('4'); toggleDropdown('highlightDropdown', event); return false;"></button>
+          <button class="color-swatch" style="background: var(--note-highlight-color-5);" onmousedown="event.preventDefault();" onclick="applyHighlightColor('5'); toggleDropdown('highlightDropdown', event); return false;"></button>
+          <button class="color-swatch" style="background: var(--note-highlight-color-6);" onmousedown="event.preventDefault();" onclick="applyHighlightColor('6'); toggleDropdown('highlightDropdown', event); return false;"></button>
+          <button class="color-swatch" style="background: var(--note-highlight-color-7);" onmousedown="event.preventDefault();" onclick="applyHighlightColor('7'); toggleDropdown('highlightDropdown', event); return false;"></button>
+          <button class="color-swatch" style="background: var(--note-highlight-color-8);" onmousedown="event.preventDefault();" onclick="applyHighlightColor('8'); toggleDropdown('highlightDropdown', event); return false;"></button>
         </div>
       </div>
     </div>
@@ -696,11 +695,11 @@
   <a href="https://brainchen2020.github.io/" class="home-button" title="Home">🏠</a>
   
   <div class="editor-container">
-    <div id="filename" contenteditable="plaintext-only" class="file-title">深度神经网络模型表达</div>
+    <div id="filename" contenteditable="false" class="file-title">深度神经网络模型表达</div>
 
     <div id="editorContainer" class="thin-line">
-      <div id="editor" contenteditable="true">
-        <p><span style="color: rgb(31, 35, 40); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;Noto Sans&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;;"><a href="https://github.com/jingyaogong/minimind-v" style="transition-property: all;"><u>Transformer&nbsp;</u></a><u>的Token不局限在表达语言，或者文本，也可以是图像，音频，动作选择等表现形式。</u></span></p><p><span style="color: rgb(31, 35, 40); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;Noto Sans&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;;"><strong><u>只要能将问题转化为模拟一系列离散 token 的流程，理论上都可以应用深度学习来解决。</u></strong></span></p><p><span style="color: rgb(31, 35, 40); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;Noto Sans&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;;"><strong><u>实际上，随着大型语言模型技术栈的日益成熟，我们可能会看到越来越多的问题被纳入这种建模范式。</u></strong></span></p><p><br></p><p>这一点上我非常认同。神经网络学习<span style="color: var(--page-text-color);">能力</span><span style="color: var(--page-text-color);">【适应性】非常强，Token是神经网络交与外界交互的媒介，token【12302】在Deepseek R1里可能表示文本“很好”，在OpenAI GPT4o里可能表示文本“达到”，在Stable Diffusion V3里可能表示某个局部的纹理或颜色特征。</span></p><p>可以肯定的是神经网络【或者说是大规模神经网络】拟合能力，通用性是非常强的。<br><br>有时候我在想Token编码限制了影响模型能力？</p><p><br></p><p><br></p>
+      <div id="editor" contenteditable="false">
+        <p><span style="color: rgb(31, 35, 40); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;Noto Sans&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;;"><a href="https://github.com/jingyaogong/minimind-v" style="transition-property: all;"><u>Transformer&nbsp;</u></a><u>的Token不局限在表达语言，或者文本，也可以是图像，音频，动作选择等表现形式。</u></span></p><p><span style="color: rgb(31, 35, 40); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;Noto Sans&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;;"><strong><u>只要能将问题转化为模拟一系列离散 token 的流程，理论上都可以应用深度学习来解决。</u></strong></span></p><p><span style="color: rgb(31, 35, 40); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;Noto Sans&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;;"><strong><u>实际上，随着大型语言模型技术栈的日益成熟，我们可能会看到越来越多的问题被纳入这种建模范式。</u></strong></span></p><p><br></p><p>这一点上我非常认同。神经网络学习<span style="color: var(--page-text-color);">能力</span><span style="color: var(--page-text-color);">【适应性】非常强，Token是神经网络交与外界交互的媒介，token【12302】在Deepseek R1里可能表示文本“很好”，在OpenAI GPT4o里可能表示文本“达到”，在Stable Diffusion V3里可能表示某个局部的纹理或颜色特征。</span></p><p>可以肯定的是神经网络【或者说是大规模神经网络】拟合能力，通用性是非常强的。<br><br>Token编码限制了影响模型能力？</p><p><br></p><p><br></p>
       </div>
     </div>
 
